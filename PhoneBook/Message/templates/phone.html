@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>通讯录</title>
+</head>
+
+<style>
+table.dataintable {
+   border: 1px solid #888888;
+   border-collapse: collapse;
+   font-family: Arial,Helvetica,sans-serif;
+   margin-top: 10px;
+   width: 100%;
+}
+table.dataintable th {
+   background-color: #CCCCCC;
+   border: 1px solid #888888;
+   padding: 5px 15px 5px 5px;
+   text-align: left;
+   vertical-align: baseline;
+}
+table.dataintable td {
+   background-color: #EFEFEF;
+   border: 1px solid #AAAAAA;
+   padding: 5px 15px 5px 5px;
+   vertical-align: text-top;
+}
+</style>
+
+<body>
+<h1>通讯录</h1>
+
+<a href="updata">更新</a>
+<a href="add">添加联系人</a>
+<a href="delete">删除联系人</a>
+
+<table class="dataintable">
+<tr>
+	<th width="10%">姓名</th>
+	<th width="15%">电话</th>
+	<th width="35%">地址</th>
+   <th >其它</th>
+	<th width="17%">更新时间</th>
+</tr>
+<tr>
+	{% for each in messageuser %}
+		<tr>
+			<td id='name'><a href="{{ each.pk }}/detail">{{ each.Name }}</a></td>
+			<td id='phonenum'>{{ each.PhoneNum }}</td>
+			<td id='address'>{{ each.Address }}</td>
+         <td id='other'>{{ each.Other }}</td>
+			<td>{{ each.UpdateTime }}</td>    
+		</tr>
+	{% endfor %}
+</tr>	
+</table>
+
+</body>
+</html>
+
+<!--       <form action="" method="post">
+      <tr>
+         <td><input id="Name" type="text" name="User_Name" value="{{ each.Name }}"></td>
+         <td><input id="PhoneNum" type="text" name="User_PhoneNum" value="{{ each.PhoneNum }}"></td>
+         <td><input id="Address" type="text" name="User_Address" value="{{ each.Address }}"></td>
+         <td><input id="Other" type="text" name="User_Other" value="{{ each.Other }}"></td>
+         <td>{{ each.UpdateTime }}</td>
+      </tr>
+      </form> -->
