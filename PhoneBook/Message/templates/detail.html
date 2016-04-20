@@ -5,9 +5,26 @@
 </head>
 <h1>详细信息</h1>
 <body>
+
+<form method="post">
+	{% csrf_token %}
+	<input type="submit" value="删除联系人" onClick="delete_confirm()">
+</form>
+
 <p>姓名：{{ user.Name }}</p>
 <p>电话：{{ user.PhoneNum }}</p>
 <p>地址：{{ user.Address }}</p>
 <p>其它：{{ user.Other }}</p>
 </body>
+
+<script type="text/javascript">
+	function delete_confirm()
+	{
+		if(!confirm('确认要删除？'))
+		{
+			window.event.returnValue=false;
+		}
+	}
+</script>
+
 </html>

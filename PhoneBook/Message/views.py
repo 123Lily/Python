@@ -45,7 +45,11 @@ def add(request):    #添加联系人
 
 def detail(request,pk,):  #联系人详细信息
 	user=MessageUser.objects.get(pk=pk)
+	if request.method=='POST':
+		user.delete()
+		return HttpResponseRedirect('http://127.0.0.1:8001/phonenum/')
 	return render(request, 'detail.html',{'user':user})
 
 def delete(request):
-	return render(request, 'delete.html')
+	messageuser=MessageUser.objects.all()
+	return render(request,'delete.html',{'messageuser':messageuser})

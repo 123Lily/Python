@@ -4,7 +4,7 @@
 	<title>通讯录</title>
 </head>
 
-<style>
+<style type="text/css">
 table.dataintable {
    border: 1px solid #888888;
    border-collapse: collapse;
@@ -25,6 +25,15 @@ table.dataintable td {
    padding: 5px 15px 5px 5px;
    vertical-align: text-top;
 }
+a {text-decoration: none;}  /*去掉超链接下划线*/
+a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
+
+/*body 
+{
+   background-image:url('/static/images/bgbody3.jpg');
+   background-size: 1366px 768px;
+}
+*/
 </style>
 
 <body>
@@ -39,7 +48,7 @@ table.dataintable td {
 	<th width="10%">姓名</th>
 	<th width="15%">电话</th>
 	<th width="35%">地址</th>
-   <th >其它</th>
+   <!-- <th >其它</th> -->
 	<th width="17%">更新时间</th>
 </tr>
 <tr>
@@ -48,7 +57,7 @@ table.dataintable td {
 			<td id='name'><a href="{{ each.pk }}/detail">{{ each.Name }}</a></td>
 			<td id='phonenum'>{{ each.PhoneNum }}</td>
 			<td id='address'>{{ each.Address }}</td>
-         <td id='other'>{{ each.Other }}</td>
+         <!-- <td id='other'>{{ each.Other }}</td> -->
 			<td>{{ each.UpdateTime }}</td>    
 		</tr>
 	{% endfor %}
