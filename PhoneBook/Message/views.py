@@ -1,16 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.http import HttpResponse
 from Message.models import MessageUser
-from .UserForm import UserForm
+from .form import AddForm,LoginForm
 from django.http import HttpResponseRedirect
+from django.contrib import auth
+from django.template.context import RequestContext
 
-from django import forms
-
-class AddForm(forms.Form):
-	add_name=forms.CharField()
-	add_phone=forms.CharField()
-	add_address=forms.CharField()
-	add_other=forms.CharField()
 
 # Create your views here.
 def index(request):  #主页
@@ -43,13 +38,40 @@ def add(request):    #添加联系人
 		addform=AddForm()
 	return render(request, 'add.html',{'addform':addform})
 
-def detail(request,pk,):  #联系人详细信息
+def detail(request,pk):  #联系人详细信息
 	user=MessageUser.objects.get(pk=pk)
 	if request.method=='POST':
 		user.delete()
-		return HttpResponseRedirect('http://127.0.0.1:8001/phonenum/')
+		return HttpResponseRedirect('../..')
 	return render(request, 'detail.html',{'user':user})
 
 def delete(request):
+	if request.method=='POST':
+		values=request.POST.getlist('single') #取得type="checkbox" 的value值，列表
+		for each in values:
+			user=MessageUser.objects.get(pk=each)
+			user.delete()
+		return HttpResponseRedirect('..')
 	messageuser=MessageUser.objects.all()
 	return render(request,'delete.html',{'messageuser':messageuser})
+
+def login(request):
+	if request.method=='GET':   #进入注册页面
+		form=LoginForm()        #注册表单，用户名，密码
+		return render_to_response('login.html',RequestContext(request,{'form':form,}))
+	else:                       #注册页面，填写注册信息
+		# form=LoginForm(request.POST)     #1
+		form=LoginForm()
+		if form.is_valid():
+			# username=request.POST.get('username','')    #2
+			# password=request.POST.get('password','')    #3    1，2，3一起
+			username=form.cleaned_data['username']
+			password=form.cleaned_data['password']
+			user=auth.authenticate(username=username,password=password)
+			if user is not None and user.is_active:
+				auth.login(request, user)
+				return render_to_response('phone.html',RequestContext(request))
+			else:
+				return render_to_response('login.html',RequestContext(request,{'form':form,'password_is_wrong':True}))
+		else:
+			return render_to_response('login.html',RequestContext(request,{'form':form,}))		

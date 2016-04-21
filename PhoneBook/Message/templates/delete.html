@@ -25,54 +25,100 @@ table.dataintable td {
    padding: 5px 15px 5px 5px;
    vertical-align: text-top;
 }
+a {text-decoration: none;}  /*去掉超链接下划线*/
+a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
 </style>
 
 <body>
 <h1>删除联系人</h1>
-<p><input id="delete" type="button" value="删除联系人" onclick="static_num()" /></p>
+
+<form method='post'>
+   {% csrf_token %}
+<input type="submit" value="删除联系人" onclick="static_num()" />
+
+
 <table class="dataintable">
 	<tr>
-		<th width="1%"><input type="checkbox" id='0' /></th>
+		<th width="1%"><input type="checkbox" name='all' value='0' onclick="allSelect('all', 'single')"/></th>
 		<th width="10%">姓名</th>
 		<th width="15%">电话</th>
 		<th width="35%">地址</th>
-	    <!-- <th>其它</th> -->
 		<th width="17%">更新时间</th>
 	</tr>
 	<tr>
 		{% for each in messageuser %}
 				<tr>
-					<td><input type="checkbox" name='select' id={{ each.pk }} ></td>
+					<td>
+                  <input type="checkbox" name='single' value='{{ each.pk }}' onclick="singleSelect2parent('all', 'single')">
+                  </form>
+               </td>
 					<td><a href="{{ each.pk }}/detail">{{ each.Name }}</a></td>
 					<td>{{ each.PhoneNum }}</td>
 					<td>{{ each.Address }}</td>
-		         <!-- <td id='other'>{{ each.Other }}</td> -->
 					<td>{{ each.UpdateTime }}</td>    
 				</tr>
 
 		{% endfor %}
 	</tr>
 </table>
-
 </body>
 
 <script>
 	function static_num()
 	{
-		document.getElementById('delete').onclick=function()
-		{
-			var arr = new Array();
-			var items=document.getElementByName('select');
-			for(i=0;i<items.length;i++)
-			{
-				if(items[i].checked)
-				{
-					arr.push(items[i].value);
-				}
-			}
-			alert('选择的个数为：'+arr.length);
-		};
-	};
+      var arr=new Array();
+      var x=0;
+      var items=document.getElementsByName('single');
+      for(i=0;i<items.length;i++)
+      {
+         if(items[i].checked)
+         {
+            x++;
+         }
+      }
+
+      if(!confirm('确定要删除这'+x+'个联系人？'))
+      {
+         window.event.returnValue=false;
+      }
+	}
+
+   function allSelect(check_v, checkname)
+   {
+       var v_item = document.getElementsByName(check_v);
+       var items = document.getElementsByName(checkname);
+       for (var i = 0; i < items.length; ++i)
+       {
+           if (v_item[0].checked)
+           {
+               items[i].checked = true;
+           }
+           else
+           {
+               items[i].checked = false;
+           }
+       }
+   }
+
+   function singleSelect2parent(check_v, checkname)
+   {
+       var v_item = document.getElementsByName(check_v);
+       var items = document.getElementsByName(checkname);
+       var childStatus = true;
+       for (var i = 0; i < items.length; ++i)
+       {
+           childStatus = (childStatus && items[i].checked);
+       }
+       if (childStatus)
+       {
+           v_item[0].checked = true;
+       }
+       else
+       {
+           v_item[0].checked = false;
+       }
+   }
+
 </script>
 
 </html>

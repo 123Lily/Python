@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^phonenum/add/$', 'Message.views.add',name='add'),
     url(r'^phonenum/delete/$', 'Message.views.delete',name='delete'),
     url(r'^phonenum/(?P<pk>\d+)/detail/$', 'Message.views.detail',name='datail'),
+    url(r'^login/$', 'Message.views.login',name='login'),
 ]

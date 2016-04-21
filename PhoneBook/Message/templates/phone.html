@@ -34,10 +34,25 @@ a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
    background-size: 1366px 768px;
 }
 */
+
+h1 {
+   font-weight:900;
+   font-size: 64px;
+   text-align:center;
+}
 </style>
 
 <body>
-<h1>通讯录</h1>
+<!-- <h1>通讯录</h1> -->
+<!-- <img src="/static/images/head.jpg"/ width="1333" height="300"> -->
+
+<div style="position: relative; width: 1333px; height: 300px;"> 
+   <img src="/static/images/head.jpg" width="1333" height="300" alt=""> 
+   <span style="position: absolute; top: 5%; left: 35%;">
+      <h1>非一般的逗比</h1>
+      <h1>通讯录</h1>
+   </span> 
+</div> 
 
 <a href="updata">更新</a>
 <a href="add">添加联系人</a>
@@ -66,13 +81,3 @@ a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
 
 </body>
 </html>
-
-<!--       <form action="" method="post">
-      <tr>
-         <td><input id="Name" type="text" name="User_Name" value="{{ each.Name }}"></td>
-         <td><input id="PhoneNum" type="text" name="User_PhoneNum" value="{{ each.PhoneNum }}"></td>
-         <td><input id="Address" type="text" name="User_Address" value="{{ each.Address }}"></td>
-         <td><input id="Other" type="text" name="User_Other" value="{{ each.Other }}"></td>
-         <td>{{ each.UpdateTime }}</td>
-      </tr>
-      </form> -->
