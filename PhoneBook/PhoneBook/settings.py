@@ -132,6 +132,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 
     ("images", os.path.join(BASE_DIR,'static/images').replace('\\','/')),
+    # ("css", os.path.join(BASE_DIR,'static/css').replace('\\','/')),
 
 )
 

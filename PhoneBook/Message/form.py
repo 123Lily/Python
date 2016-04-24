@@ -10,10 +10,44 @@ class UserForm(forms.Form):
 	# Other=forms.TextField()    #其他
 
 class AddForm(forms.Form):
-	add_name=forms.CharField()
-	add_phone=forms.CharField()
-	add_address=forms.CharField(required=False)
-	add_other=forms.CharField(required=False)
+	add_name=forms.CharField(
+			required=True,
+			error_messages={'required':'请输入姓名'},
+			widget=forms.TextInput(
+					attrs={
+						'class':'addmessage',
+						'placeholder':r'姓名',
+					}
+				),
+		)
+	add_phone=forms.CharField(
+			required=True,
+			error_messages={'required':'请输入电话'},
+			widget=forms.TextInput(
+					attrs={
+						'class':'addmessage',
+						'placeholder':r'电话',
+					}
+				),
+		)
+	add_address=forms.CharField(
+			required=False,
+			widget=forms.Textarea(
+					attrs={
+						'class':'vtextarea',
+						'placeholder':r'地址',
+					}
+				),
+		)
+	add_other=forms.CharField(
+			required=False,
+			widget=forms.Textarea(
+					attrs={
+						'class':'vtextarea',
+						'placeholder':r'其它',
+					}
+				),
+		)
 
 class LoginForm(forms.Form):
 	username=forms.CharField(
