@@ -31,8 +31,10 @@ def add(request):    #添加联系人
 			Other=addform.cleaned_data['add_other']
 			# Name=addform.cleaned_data['add_name']
 			new_user=MessageUser.objects.get_or_create(Name=Name,PhoneNum=PhoneNum,Address=Address,Other=Other)
-			return HttpResponse('添加成功！')
-			# return HttpResponseRedirect('..')
+			if request.POST.get("Save"):
+				return HttpResponse('添加成功！')
+			else:
+				return HttpResponseRedirect('.')
 
 	else:
 		addform=AddForm()

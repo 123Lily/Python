@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
-<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
-<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+	<title>通讯录</title>
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+	<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
 
 <style type="text/css">
     .addmessage{
@@ -41,7 +42,7 @@
         background: #228fbd;
         border: 1px solid #eee;
         border-radius: 4px;
-        margin-left: 600px; 
+        margin-left: 25px; 
         font-weight: bold;
         color: #cde6c7;
     }
@@ -139,8 +140,9 @@
 			        </div>
 			    </div>
 			    <div>
-			    	<input type="button" value="取消" class="sub" onclick="go_back()" />
-			    	<input type="submit" value="添加" class="sub" style="margin-left: 13px;" />
+			    	<input type="button" value="Cancel" class="sub" onclick="go_back()" />
+			    	<input type="submit" name="Save and add another" value="Save and add another" class="sub" style="margin-left: 13px;" />
+			    	<input type="submit" name="Save" value="Save" class="sub" style="margin-left: 13px;" />
 			    </div>
 			</form>
 		</div>
@@ -151,7 +153,8 @@
 <script type="text/javascript">
 	function go_back()
 	{
-		history.go(-1);
+		//history.go(-1); //返回上一页
+		window.location.href="../";
 	}
 </script>
 

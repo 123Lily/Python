@@ -2,65 +2,117 @@
 <html>
 <head>
 	<title>通讯录</title>
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+	<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+	<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+	<style type="text/css">
+			.img_top{
+			background-color: #90d7ec;
+			margin-left: -20px;
+			margin-right: -20px;
+			margin-top: -26px; 
+		}
+
+		    .sub{
+	        padding: 12px 14px;
+	        margin: 20px 0 20px;
+	        background: #228fbd;
+	        border: 1px solid #eee;
+	        border-radius: 4px;
+	        margin-left: 5px; 
+	        font-weight: bold;
+	        color: #cde6c7;
+	    }
+	</style>
 </head>
 
-<style type="text/css">
-table.dataintable {
-   border: 1px solid #888888;
-   border-collapse: collapse;
-   font-family: Arial,Helvetica,sans-serif;
-   margin-top: 10px;
-   width: 100%;
-}
-table.dataintable th {
-   background-color: #CCCCCC;
-   border: 1px solid #888888;
-   padding: 5px 15px 5px 5px;
-   text-align: left;
-   vertical-align: baseline;
-}
-table.dataintable td {
-   background-color: #EFEFEF;
-   border: 1px solid #AAAAAA;
-   padding: 5px 15px 5px 5px;
-   vertical-align: text-top;
-}
-a {text-decoration: none;}  /*去掉超链接下划线*/
-a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
-</style>
-
 <body>
-<h1>删除联系人</h1>
+<!-- <body style="background-image: url(/static/images/bgbody2.jpg);"> -->
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="img_top">
+				<h2 class="text-center">
+					<span class="marker"><br />永远的亲人<br />通讯录</span>
+				</h2>
+				<div style="margin-left: 20px;">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="..">首页</a>
+						</li>
+						<li>
+							<a href="../add">添加联系人</a>
+						</li>
+						<li  class="active">
+							<a href="">删除联系人</a>
+						</li>
+						<li>
+							<a href="delete">登录</a>
+						</li>				
+						<li>
+							<a href="delete">注册</a>
+						</li>				
+					</ul>
+				</div>
+			</div>
 
-<form method='post'>
-   {% csrf_token %}
-<input type="submit" value="删除联系人" onclick="static_num()" />
-
-
-<table class="dataintable">
-	<tr>
-		<th width="1%"><input type="checkbox" name='all' value='0' onclick="allSelect('all', 'single')"/></th>
-		<th width="10%">姓名</th>
-		<th width="15%">电话</th>
-		<th width="35%">地址</th>
-		<th width="17%">更新时间</th>
-	</tr>
-	<tr>
-		{% for each in messageuser %}
-				<tr>
-					<td>
-                  <input type="checkbox" name='single' value='{{ each.pk }}' onclick="singleSelect2parent('all', 'single')">
-                  </form>
-               </td>
-					<td><a href="{{ each.pk }}/detail">{{ each.Name }}</a></td>
-					<td>{{ each.PhoneNum }}</td>
-					<td>{{ each.Address }}</td>
-					<td>{{ each.UpdateTime }}</td>    
-				</tr>
-
-		{% endfor %}
-	</tr>
-</table>
+			<form method='post'>
+				{% csrf_token %}
+				<!-- <input type="submit" value="删除联系人" onclick="static_num()" /> -->
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th width="1%">
+								<input type="checkbox" name='all' value='0' onclick="allSelect('all', 'single')"/>
+							</th>
+							<th>
+								姓名
+							</th>
+							<th>
+								电话
+							</th>
+							<th>
+								地址
+							</th>
+							<th>
+								更新时间
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for each in messageuser %}
+							<tr>
+								<td>
+									<input type="checkbox" name='single' value='{{ each.pk }}' onclick="singleSelect2parent('all', 'single')">
+								</td>
+								<td>
+									<a href="../{{ each.pk }}/detail">
+										{{ each.Name }}
+									</a>
+								</td>
+								<td>
+									{{ each.PhoneNum }}
+								</td>
+								<td>
+									{{ each.Address }}
+								</td>
+								<td>
+									{{ each.UpdateTime }}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div>
+					<input type="button" value="取消" class="sub" onclick="go_back()" />
+			    	<input type="submit" value="删除" class="sub" style="margin-left: 13px; background:red;" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>			
 </body>
 
 <script>
@@ -118,6 +170,12 @@ a:hover {text-decoration:underline;}  /*鼠标放上边显示下划线*/
            v_item[0].checked = false;
        }
    }
+
+	function go_back()
+	{
+		//history.go(-1); //返回上一页
+		window.location.href="../"; //返回主页
+	}
 
 </script>
 
