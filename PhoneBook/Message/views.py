@@ -1,25 +1,16 @@
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse
 from Message.models import MessageUser
-from .form import AddForm,LoginForm
+from .form import AddForm,LoginForm,UpdateForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.template.context import RequestContext
 
 
 # Create your views here.
-def index(request):  #主页
-	content='欢迎光临号码不离，We Are All Here!'
-	#return HttpResponse('欢迎光临号码不离，We Are All Here!')
-	return render(request,'index.html',{'content':content})
-
 def phone(request):  #通讯录首页
 	messageuser=MessageUser.objects.all()
 	return render(request,'phone.html',{'messageuser':messageuser})
-
-def updata(request):  #更新数据
-	messageuser=MessageUser.objects.all()
-	return render(request,'updata.html',{'messageuser':messageuser})
 
 def add(request):    #添加联系人
 	if request.method=='POST':
@@ -32,7 +23,7 @@ def add(request):    #添加联系人
 			# Name=addform.cleaned_data['add_name']
 			new_user=MessageUser.objects.get_or_create(Name=Name,PhoneNum=PhoneNum,Address=Address,Other=Other)
 			if request.POST.get("Save"):
-				return HttpResponse('添加成功！')
+				return HttpResponseRedirect('../')
 			else:
 				return HttpResponseRedirect('.')
 
@@ -42,10 +33,26 @@ def add(request):    #添加联系人
 
 def detail(request,pk):  #联系人详细信息
 	user=MessageUser.objects.get(pk=pk)
+	# updateform.fields['update_name'].widget.attrs.update({ "value": user.Name })
 	if request.method=='POST':
-		user.delete()
-		return HttpResponseRedirect('../..')
-	return render(request, 'detail.html',{'user':user})
+		updateform=UpdateForm(request.POST)
+		if updateform.is_valid():
+			user.Name=updateform.cleaned_data['update_name']
+			user.PhoneNum=updateform.cleaned_data['update_phone']
+			user.Address=updateform.cleaned_data['update_address']
+			user.Other=updateform.cleaned_data['update_other']
+			user.save()
+			if request.POST.get("Update"):
+				return HttpResponseRedirect('../../')
+	else:
+		updateform=UpdateForm(initial={
+				'update_name':user.Name,
+				'update_phone':user.PhoneNum,
+				'update_address':user.Address,
+				'update_other':user.Other
+			}
+		)
+	return render(request, 'detail.html',{'user':user,'updateform':updateform})
 
 def delete(request):
 	if request.method=='POST':

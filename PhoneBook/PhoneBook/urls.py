@@ -15,17 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from Message.views import index as views_index
 
 urlpatterns = [
-	url(r'^index/$', views_index,name='ZhuYe'),
-	#url(r'^index/', 'Message.views.index',name='ZhuYe'),
+
     url(r'^admin/', admin.site.urls),
-    url(r'^phonenum/$', 'Message.views.phone',name='phonenum'),
-    url(r'^phonenum/updata/$', 'Message.views.updata',name='updata'),
-    url(r'^phonenum/(?P<pk>\d+)/$', 'Message.views.phone',name='phonenum'),
-    url(r'^phonenum/add/$', 'Message.views.add',name='add'),
-    url(r'^phonenum/delete/$', 'Message.views.delete',name='delete'),
-    url(r'^phonenum/(?P<pk>\d+)/detail/$', 'Message.views.detail',name='datail'),
+    url(r'^$', 'Message.views.phone',name='phonenum'),
+    url(r'^(?P<pk>\d+)/$', 'Message.views.phone',name='phonenum'),
+    url(r'^add/$', 'Message.views.add',name='add'),
+    url(r'^delete/$', 'Message.views.delete',name='delete'),
+    url(r'^(?P<pk>\d+)/detail/$', 'Message.views.detail',name='datail'),
     url(r'^login/$', 'Message.views.login',name='login'),
 ]
